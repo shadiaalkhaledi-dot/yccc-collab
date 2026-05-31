@@ -576,6 +576,7 @@ function generateStartPrompt() {
   let prompt;
   const base = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}`;
   const driveFolder = `https://drive.google.com/drive/folders/1FFf_t7r-ot3sWn6K4FPK-WIijglpllLv`;
+  const writeToken = localStorage.getItem('yccc_write_token') || 'NOT SET — click ⚙ Setup Write Access first';
 
   if (type === 'first') {
     prompt = `You are joining a shared AI collaboration workspace for the YCCC (Yemeni Cultural Centre of Canada) project.
@@ -596,7 +597,7 @@ When creating or editing files, always use the shared Google Drive folder above 
 
 GITHUB WRITE ACCESS — at end of session, update HANDOFF.md and TASKS.md directly:
 - API base: https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/
-- Auth header: Authorization: token ${GITHUB_WRITE_TOKEN}
+- Auth header: Authorization: token ${writeToken}
 - To update a file: (1) GET the file URL to retrieve its SHA, (2) PUT with base64-encoded updated content + SHA + commit message
 - Commit message format: "session: ${name} - [one line summary]"
 
@@ -623,7 +624,7 @@ When creating or editing files, always use the shared Google Drive folder above.
 
 GITHUB WRITE ACCESS — at end of session, update HANDOFF.md and TASKS.md directly:
 - API base: https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/
-- Auth header: Authorization: token ${GITHUB_WRITE_TOKEN}
+- Auth header: Authorization: token ${writeToken}
 - To update a file: (1) GET the file URL to retrieve its SHA, (2) PUT with base64-encoded updated content + SHA + commit message
 - Commit message format: "session: ${name} - [one line summary]"
 
