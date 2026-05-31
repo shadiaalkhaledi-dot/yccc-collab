@@ -531,30 +531,31 @@ function generateStartPrompt() {
   const goal = document.getElementById('start-goal').value;
   const today = new Date().toISOString().split('T')[0];
   let prompt;
+  const base = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}`;
   if (type === 'first') {
-    prompt = `You are joining a shared AI collaboration workspace on GitHub for the YCCC (Yemeni Cultural Centre of Canada) project.
+    prompt = `You are joining a shared AI collaboration workspace for the YCCC (Yemeni Cultural Centre of Canada) project.
 
 Team: Shadi, Emad, Maryam, Yara — each using their own AI assistant.
 
-Please do the following in order:
-1. Read README.md — understand how the system works.
-2. Read HANDOFF.md Zone 1 (Project Context) and the last 3 entries in Zone 2.
-3. Read TASKS.md — understand what's in progress and pending.
-4. Read FILES.md — see all active project documents.
+Please fetch and read these files in order:
+1. ${base}/README.md — how the system works
+2. ${base}/HANDOFF.md — read Zone 1 (Project Context) + last 3 entries in Zone 2
+3. ${base}/TASKS.md — what's in progress and pending
+4. ${base}/FILES.md — all active project documents
 
 I am ${name}, using ${ai}. Today is ${today}.
 My goal for this session: ${goal || '[not specified]'}
 
 Confirm what you understand before we start.`;
   } else {
-    prompt = `You are continuing work in a shared AI collaboration workspace on GitHub for the YCCC project.
+    prompt = `You are continuing work in a shared AI collaboration workspace for the YCCC project.
 
 Team: Shadi, Emad, Maryam, Yara — each using their own AI assistant.
 
-Please do the following in order:
-1. Read HANDOFF.md Zone 2 only — entries since ${lastDate}.
-2. Read TASKS.md — check for status changes since your last session.
-3. Check CHANGES.md for any Google Doc edits made since ${lastDate}.
+Please fetch and read these files:
+1. ${base}/HANDOFF.md — Zone 2 only, entries since ${lastDate}
+2. ${base}/TASKS.md — check for status changes since your last session
+3. ${base}/CHANGES.md — any Google Doc edits since ${lastDate}
 
 I am ${name}, using ${ai}. Today is ${today}.
 My goal for this session: ${goal || '[not specified]'}
