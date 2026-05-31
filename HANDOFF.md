@@ -19,7 +19,7 @@
 - **Shadi Al-Khaledi** — Co-Founder / Architect — using Claude
 - **Maryam Saif** — Executive Lead / Co-Founder — AI TBD
 - **Emad** — Collaborator — AI TBD
-- **Yara** — Collaborator — AI TBD
+- **Yara** — Collaborator — using Claude
 
 ### The Project
 We are founding the **Yemeni Cultural Centre of Canada (YCCC)**, branded as **YCC Calgary** — the first dedicated Yemeni cultural institution in Canada. It is structured as a two-entity hybrid: a federal non-profit registered charity (Entity 1, Year 1) for grants, cultural programs, heritage, and education; and a for-profit social enterprise (Entity 2, Year 2+) operating a café, retail, and event rentals whose revenue flows back to the charity. The founding team is Maryam Saif (Executive Lead, Shawthab Foundation founder, cultural sector background) and Shadi Al-Khaledi (Architect, YES-program alumnus). Current phase: registration, governance, and 90-day foundation roadmap.
@@ -41,7 +41,7 @@ We are founding the **Yemeni Cultural Centre of Canada (YCCC)**, branded as **YC
 7. If something is blocked, say exactly what's blocking it.
 
 ### File Locations
-- GitHub repo: [paste URL once created]
+- GitHub repo: https://github.com/shadiaalkhaledi-dot/yccc-collab
 - Google Drive: https://drive.google.com/drive/folders/1FFf_t7r-ot3sWn6K4FPK-WIijglpllLv
 - Dashboard: [paste GitHub Pages URL once enabled]
 
@@ -54,6 +54,27 @@ We are founding the **Yemeni Cultural Centre of Canada (YCCC)**, branded as **YC
 -->
 
 ## ZONE 2 — Session Updates
+
+---
+
+### 2026-05-31 | Yara × Claude
+
+**Done:**
+- Tested full collaboration pipeline end-to-end
+- Connected Google Drive connector and located COLLABORATION-TEST folder
+- Yara manually added text to "test" doc in COLLABORATION-TEST folder
+- Claude (AI) successfully appended text to same doc via browser automation
+- Confirmed GitHub write access works via embedded token in session prompt
+
+**Manual Changes:** Added "Hello this is yara test" to COLLABORATION-TEST/test doc
+
+**Blocked / Pending:**
+- Yara still needs a GitHub account to be added as collaborator
+- First real project task not yet defined
+
+**Next person picks up:**
+- Define first real project task (Task 5)
+- Invite Yara to GitHub repo (Task 3) once she has an account
 
 ---
 
