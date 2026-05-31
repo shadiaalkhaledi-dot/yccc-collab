@@ -532,16 +532,24 @@ function generateStartPrompt() {
   const today = new Date().toISOString().split('T')[0];
   let prompt;
   const base = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}`;
+  const driveFolder = `https://drive.google.com/drive/folders/1FFf_t7r-ot3sWn6K4FPK-WIijglpllLv`;
+
   if (type === 'first') {
     prompt = `You are joining a shared AI collaboration workspace for the YCCC (Yemeni Cultural Centre of Canada) project.
 
 Team: Shadi, Emad, Maryam, Yara — each using their own AI assistant.
 
+SHARED LOCATIONS — use these for all work this session:
+- Google Drive shared folder: ${driveFolder}
+- GitHub repo: https://github.com/${GITHUB_USER}/${GITHUB_REPO}
+
 Please fetch and read these files in order:
 1. ${base}/README.md — how the system works
 2. ${base}/HANDOFF.md — read Zone 1 (Project Context) + last 3 entries in Zone 2
 3. ${base}/TASKS.md — what's in progress and pending
-4. ${base}/FILES.md — all active project documents
+4. ${base}/FILES.md — all active project documents with their Drive links
+
+When creating or editing files, always use the shared Google Drive folder above — never save to a local or personal location.
 
 I am ${name}, using ${ai}. Today is ${today}.
 My goal for this session: ${goal || '[not specified]'}
@@ -552,10 +560,17 @@ Confirm what you understand before we start.`;
 
 Team: Shadi, Emad, Maryam, Yara — each using their own AI assistant.
 
+SHARED LOCATIONS — use these for all work this session:
+- Google Drive shared folder: ${driveFolder}
+- GitHub repo: https://github.com/${GITHUB_USER}/${GITHUB_REPO}
+
 Please fetch and read these files:
 1. ${base}/HANDOFF.md — Zone 2 only, entries since ${lastDate}
 2. ${base}/TASKS.md — check for status changes since your last session
 3. ${base}/CHANGES.md — any Google Doc edits since ${lastDate}
+4. ${base}/FILES.md — know what files exist before starting work
+
+When creating or editing files, always use the shared Google Drive folder above.
 
 I am ${name}, using ${ai}. Today is ${today}.
 My goal for this session: ${goal || '[not specified]'}
