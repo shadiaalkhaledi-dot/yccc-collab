@@ -132,8 +132,27 @@
 
 <header>
   <h1>🕌 YCCC Collaboration Hub</h1>
-  <span id="last-refresh">Loading...</span>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <span id="last-refresh" style="font-size:13px;color:#57606a;"></span>
+    <button class="btn btn-secondary" onclick="openTokenSetup()" id="token-btn" style="font-size:12px;padding:5px 10px;">⚙ Setup Write Access</button>
+  </div>
 </header>
+
+<!-- TOKEN SETUP MODAL -->
+<div class="modal-overlay" id="modal-token">
+  <div class="modal" style="max-width:400px;">
+    <h2>⚙ Write Access Token</h2>
+    <p style="font-size:13px;color:#57606a;margin-bottom:16px;">Enter the team write token to allow your AI to push updates to GitHub. This is saved only on your device — never sent to GitHub in code.</p>
+    <div class="field">
+      <label>GitHub Write Token</label>
+      <input type="password" id="token-input" placeholder="ghp_...">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('token')">Cancel</button>
+      <button class="btn btn-start" onclick="saveToken()">Save →</button>
+    </div>
+  </div>
+</div>
 
 <div class="container">
 
@@ -287,6 +306,29 @@
 <div id="toast">✅ Copied to clipboard!</div>
 
 <script>
+// ─── TOKEN SETUP ───────────────────────────────────────────────────────────
+function openTokenSetup() {
+  const existing = localStorage.getItem('yccc_write_token') || '';
+  document.getElementById('token-input').value = existing;
+  document.getElementById('modal-token').classList.add('open');
+}
+function saveToken() {
+  const val = document.getElementById('token-input').value.trim();
+  if (val) {
+    localStorage.setItem('yccc_write_token', val);
+    document.getElementById('token-btn').textContent = '⚙ Write Access ✅';
+    document.getElementById('token-btn').style.color = '#1a7f37';
+  }
+  closeModal('token');
+}
+// Show green checkmark if token already saved
+if (localStorage.getItem('yccc_write_token')) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('token-btn');
+    if (btn) { btn.textContent = '⚙ Write Access ✅'; btn.style.color = '#1a7f37'; }
+  });
+}
+
 // ─── LOGIN ─────────────────────────────────────────────────────────────────
 const PASSWORD = 'YCCC26';
 function checkLogin() {
@@ -310,7 +352,7 @@ if (sessionStorage.getItem('yccc_auth') === '1') {
 const GITHUB_USER = 'shadiaalkhaledi-dot';
 const GITHUB_REPO = 'yccc-collab';
 const GITHUB_BRANCH = 'main';
-const GITHUB_WRITE_TOKEN = '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';
+const GITHUB_WRITE_TOKEN = localStorage.getItem('yccc_write_token') || '';
 
 // ─── TEAM ──────────────────────────────────────────────────────────────────
 const TEAM = [
