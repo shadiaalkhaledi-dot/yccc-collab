@@ -2,7 +2,7 @@
 
 > **AI Instructions:** Read this every session. Update status when tasks change. Never delete rows — move completed tasks to the Done section.
 
-Last updated: 2026-05-31 | Shadi × Claude
+Last updated: 2026-05-31 | Yara × Claude
 
 ---
 
@@ -21,8 +21,7 @@ Last updated: 2026-05-31 | Shadi × Claude
 
 | # | Task | Owner | AI | Status | Updated | Notes |
 |---|------|-------|----|--------|---------|-------|
-| 1 | Fill in project description in HANDOFF.md Zone 1 | Shadi | Claude | `todo` | 2026-05-31 | Required before team can start |
-| 2 | Create GitHub repo and push system files | Shadi | Claude | `in progress` | 2026-05-31 | |
+| 1 | Fill in project description in HANDOFF.md Zone 1 | Shadi | Claude | `todo` | 2026-05-31 | GitHub repo URL now added |
 | 3 | Invite team to GitHub repo | Shadi | — | `todo` | 2026-05-31 | Yara needs account first |
 | 4 | Yara creates GitHub account | Yara | — | `todo` | 2026-05-31 | |
 | 5 | Define first real project task | Shadi | Claude | `todo` | 2026-05-31 | |
@@ -33,7 +32,7 @@ Last updated: 2026-05-31 | Shadi × Claude
 
 | # | Task | Owner | Completed |
 |---|------|-------|-----------|
-| — | — | — | — |
+| 2 | Create GitHub repo and push system files | Shadi | 2026-05-31 |
 
 ---
 
