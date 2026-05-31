@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YCCC Collaboration Hub</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f6f8fa; color: #24292f; min-height: 100vh; }
+
+  header { background: #ffffff; border-bottom: 1px solid #d0d7de; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; }
+  header h1 { font-size: 18px; font-weight: 600; color: #0969da; }
+  header span { font-size: 13px; color: #57606a; }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+
+  /* WHO'S ACTIVE */
+  .active-section { margin-bottom: 28px; }
+  .section-title { font-size: 13px; font-weight: 600; color: #57606a; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
+  .people-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+  .person-card { background: #ffffff; border: 1px solid #d0d7de; border-radius: 8px; padding: 14px 16px; display: flex; align-items: center; gap: 12px; }
+  .person-card.active { border-color: #1a7f37; box-shadow: 0 0 0 3px #dafbe1; }
+  .person-card.idle { border-color: #d0d7de; opacity: 0.7; }
+  .avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; flex-shrink: 0; color: #fff; }
+  .avatar.s { background: #0969da; }
+  .avatar.e { background: #8250df; }
+  .avatar.m { background: #cf222e; }
+  .avatar.y { background: #9a6700; }
+  .person-info { flex: 1; min-width: 0; }
+  .person-name { font-size: 14px; font-weight: 600; color: #24292f; }
+  .person-status { font-size: 12px; color: #57606a; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .person-ai { font-size: 11px; color: #0969da; margin-top: 3px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .dot.green { background: #1a7f37; box-shadow: 0 0 6px #1a7f3766; }
+  .dot.grey { background: #d0d7de; }
+
+  /* SESSION BUTTONS */
+  .session-bar { background: #ffffff; border: 1px solid #d0d7de; border-radius: 8px; padding: 16px 20px; margin-bottom: 28px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .session-bar p { font-size: 13px; color: #57606a; }
+  .btn-group { display: flex; gap: 10px; }
+  .btn { padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: opacity 0.15s; }
+  .btn:hover { opacity: 0.85; }
+  .btn-start { background: #1a7f37; color: #fff; }
+  .btn-end { background: #cf222e; color: #fff; }
+  .btn-secondary { background: #f6f8fa; color: #24292f; border: 1px solid #d0d7de; }
+
+  /* MODAL */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 100; align-items: center; justify-content: center; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: #ffffff; border: 1px solid #d0d7de; border-radius: 12px; padding: 28px; width: 100%; max-width: 480px; box-shadow: 0 8px 24px rgba(140,149,159,0.2); }
+  .modal h2 { font-size: 16px; margin-bottom: 20px; color: #24292f; }
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 12px; color: #57606a; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+  .field select, .field input, .field textarea { width: 100%; background: #ffffff; border: 1px solid #d0d7de; border-radius: 6px; color: #24292f; padding: 8px 12px; font-size: 14px; font-family: inherit; }
+  .field textarea { resize: vertical; min-height: 80px; }
+  .field select:focus, .field input:focus, .field textarea:focus { outline: none; border-color: #0969da; box-shadow: 0 0 0 3px #ddf4ff; }
+  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+  .prompt-box { background: #f6f8fa; border: 1px solid #d0d7de; border-radius: 6px; padding: 12px; font-size: 12px; color: #57606a; margin-top: 16px; font-family: monospace; white-space: pre-wrap; display: none; }
+  .copy-btn { margin-top: 10px; }
+
+  /* TWO COLUMNS */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 28px; }
+  @media (max-width: 680px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* TASKS */
+  .card { background: #ffffff; border: 1px solid #d0d7de; border-radius: 8px; overflow: hidden; }
+  .card-header { padding: 12px 16px; border-bottom: 1px solid #d0d7de; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: space-between; background: #f6f8fa; color: #24292f; }
+  .task-item { padding: 12px 16px; border-bottom: 1px solid #f3f4f6; display: flex; align-items: flex-start; gap: 10px; }
+  .task-item:last-child { border-bottom: none; }
+  .task-badge { font-size: 11px; padding: 2px 8px; border-radius: 12px; font-weight: 600; white-space: nowrap; flex-shrink: 0; }
+  .badge-todo { background: #f6f8fa; color: #57606a; border: 1px solid #d0d7de; }
+  .badge-progress { background: #ddf4ff; color: #0969da; }
+  .badge-blocked { background: #ffebe9; color: #cf222e; }
+  .badge-done { background: #dafbe1; color: #1a7f37; }
+  .task-text { font-size: 13px; flex: 1; color: #24292f; }
+  .task-owner { font-size: 11px; color: #57606a; margin-top: 3px; }
+
+  /* HANDOFF LOG */
+  .log-entry { padding: 14px 16px; border-bottom: 1px solid #f3f4f6; }
+  .log-entry:last-child { border-bottom: none; }
+  .log-meta { font-size: 12px; color: #0969da; font-weight: 600; margin-bottom: 6px; }
+  .log-line { font-size: 12px; color: #57606a; margin-bottom: 3px; }
+  .log-line strong { color: #24292f; }
+
+  /* FILES */
+  .file-item { padding: 10px 16px; border-bottom: 1px solid #f3f4f6; display: flex; align-items: center; gap: 10px; }
+  .file-item:last-child { border-bottom: none; }
+  .file-icon { font-size: 16px; }
+  .file-name { font-size: 13px; flex: 1; color: #24292f; }
+  .file-meta { font-size: 11px; color: #57606a; }
+  .file-link { color: #0969da; text-decoration: none; }
+  .file-link:hover { text-decoration: underline; }
+
+  /* CHANGES */
+  .change-item { padding: 10px 16px; border-bottom: 1px solid #f3f4f6; font-size: 12px; color: #57606a; }
+  .change-item:last-child { border-bottom: none; }
+  .change-item strong { color: #24292f; }
+  .change-who { color: #0969da; }
+
+  .empty { padding: 20px 16px; text-align: center; font-size: 13px; color: #57606a; }
+  .tag { display: inline-block; font-size: 10px; padding: 1px 6px; border-radius: 4px; background: #f6f8fa; color: #57606a; border: 1px solid #d0d7de; margin-left: 6px; }
+
+  #toast { position: fixed; bottom: 24px; right: 24px; background: #1a7f37; color: #fff; padding: 10px 18px; border-radius: 8px; font-size: 13px; font-weight: 600; display: none; z-index: 200; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🕌 YCCC Collaboration Hub</h1>
+  <span id="last-refresh">Loading...</span>
+</header>
+
+<div class="container">
+
+  <!-- SESSION BAR -->
+  <div class="session-bar">
+    <p>Working on this project? Start or end your session to keep the team in sync.</p>
+    <div class="btn-group">
+      <button class="btn btn-start" onclick="openModal('start')">▶ Start Session</button>
+      <button class="btn btn-end" onclick="openModal('end')">■ End Session</button>
+    </div>
+  </div>
+
+  <!-- WHO'S ACTIVE -->
+  <div class="active-section">
+    <div class="section-title">Team</div>
+    <div class="people-grid" id="people-grid">
+      <!-- populated by JS -->
+    </div>
+  </div>
+
+  <!-- TASKS + HANDOFF -->
+  <div class="two-col">
+    <div class="card">
+      <div class="card-header">
+        Tasks
+        <span id="task-count" class="tag">—</span>
+      </div>
+      <div id="tasks-list"><div class="empty">Loading...</div></div>
+    </div>
+    <div class="card">
+      <div class="card-header">Recent Handoffs</div>
+      <div id="handoff-list"><div class="empty">Loading...</div></div>
+    </div>
+  </div>
+
+  <!-- FILES + CHANGES -->
+  <div class="two-col">
+    <div class="card">
+      <div class="card-header">Project Files</div>
+      <div id="files-list"><div class="empty">Loading...</div></div>
+    </div>
+    <div class="card">
+      <div class="card-header">Recent Doc Changes</div>
+      <div id="changes-list"><div class="empty">Loading...</div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- START SESSION MODAL -->
+<div class="modal-overlay" id="modal-start">
+  <div class="modal">
+    <h2>▶ Start Session</h2>
+    <div class="field">
+      <label>Who are you?</label>
+      <select id="start-name">
+        <option value="Shadi">Shadi</option>
+        <option value="Emad">Emad</option>
+        <option value="Maryam">Maryam</option>
+        <option value="Yara">Yara</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>AI you're using</label>
+      <select id="start-ai">
+        <option value="Claude">Claude (Anthropic)</option>
+        <option value="ChatGPT">ChatGPT (OpenAI)</option>
+        <option value="Gemini">Gemini (Google)</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>First time in this repo?</label>
+      <select id="start-type">
+        <option value="returning">No — I've worked here before</option>
+        <option value="first">Yes — first session ever</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Last session date (if returning)</label>
+      <input type="date" id="start-last-date">
+    </div>
+    <div class="field">
+      <label>Goal for this session</label>
+      <input type="text" id="start-goal" placeholder="e.g. Draft the partnership outreach emails">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('start')">Cancel</button>
+      <button class="btn btn-start" onclick="generateStartPrompt()">Generate Prompt →</button>
+    </div>
+    <div class="prompt-box" id="start-prompt-box"></div>
+    <button class="btn btn-secondary copy-btn" id="start-copy-btn" style="display:none" onclick="copyPrompt('start')">📋 Copy Prompt</button>
+  </div>
+</div>
+
+<!-- END SESSION MODAL -->
+<div class="modal-overlay" id="modal-end">
+  <div class="modal">
+    <h2>■ End Session</h2>
+    <div class="field">
+      <label>Who are you?</label>
+      <select id="end-name">
+        <option value="Shadi">Shadi</option>
+        <option value="Emad">Emad</option>
+        <option value="Maryam">Maryam</option>
+        <option value="Yara">Yara</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>AI you used</label>
+      <select id="end-ai">
+        <option value="Claude">Claude (Anthropic)</option>
+        <option value="ChatGPT">ChatGPT (OpenAI)</option>
+        <option value="Gemini">Gemini (Google)</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>What did you complete?</label>
+      <textarea id="end-done" placeholder="- Drafted partnership email template&#10;- Updated task #3 status&#10;- Added new contact list"></textarea>
+    </div>
+    <div class="field">
+      <label>New tasks that came up? (optional)</label>
+      <textarea id="end-new-tasks" placeholder="- Review bylaws draft (Owner: Maryam)&#10;- Call Calgary Arts Development (Owner: Shadi)"></textarea>
+    </div>
+    <div class="field">
+      <label>Anything blocked?</label>
+      <input type="text" id="end-blocked" placeholder="e.g. Waiting on Om Ahmed's director declaration, or None">
+    </div>
+    <div class="field">
+      <label>What should the next person pick up?</label>
+      <textarea id="end-next" placeholder="- Emad: review Section 2 of the proposal doc [link]&#10;- Anyone: task #3 still needs doing"></textarea>
+    </div>
+    <div class="field">
+      <label>Manual edits to Google Docs? (outside AI)</label>
+      <input type="text" id="end-manual" placeholder="e.g. Edited Section 3 of Founding Brief [link], or None">
+    </div>
+    <div class="field">
+      <label>New files added to Drive? (optional)</label>
+      <input type="text" id="end-new-files" placeholder="e.g. Added Budget-Draft-v1.xlsx [link]">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('end')">Cancel</button>
+      <button class="btn btn-end" onclick="generateEndPrompt()">Generate Handoff Entry →</button>
+    </div>
+    <div class="prompt-box" id="end-prompt-box"></div>
+    <button class="btn btn-secondary copy-btn" id="end-copy-btn" style="display:none" onclick="copyPrompt('end')">📋 Copy Handoff Entry</button>
+  </div>
+</div>
+
+<div id="toast">✅ Copied to clipboard!</div>
+
+<script>
+// ─── CONFIG ────────────────────────────────────────────────────────────────
+// Replace with your actual GitHub repo details once the repo is created
+const GITHUB_USER = 'shadiaalkhaledi-dot';
+const GITHUB_REPO = 'yccc-collab';
+const GITHUB_BRANCH = 'main';
+
+// ─── TEAM ──────────────────────────────────────────────────────────────────
+const TEAM = [
+  { name: 'Shadi', key: 's', role: 'Lead / Architect' },
+  { name: 'Emad', key: 'e', role: 'Collaborator' },
+  { name: 'Maryam', key: 'm', role: 'Executive Lead' },
+  { name: 'Yara', key: 'y', role: 'Collaborator' },
+];
+
+// ─── RAW GITHUB FETCH ──────────────────────────────────────────────────────
+async function fetchRaw(path) {
+  const url = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${path}`;
+  try {
+    const r = await fetch(url);
+    if (!r.ok) return null;
+    return await r.text();
+  } catch { return null; }
+}
+
+// ─── PARSE TASKS.md ────────────────────────────────────────────────────────
+function parseTasks(md) {
+  if (!md) return [];
+  const tasks = [];
+  const lines = md.split('\n');
+  let inTable = false;
+  for (const line of lines) {
+    if (line.includes('| # |') || line.includes('|---|')) { inTable = true; continue; }
+    if (inTable && line.startsWith('|') && !line.includes('---|')) {
+      const cols = line.split('|').map(c => c.trim()).filter(Boolean);
+      if (cols.length >= 5 && cols[0] !== '#' && cols[0] !== '—') {
+        tasks.push({ num: cols[0], task: cols[1], owner: cols[2], ai: cols[3], status: cols[4] });
+      }
+    } else if (inTable && !line.startsWith('|')) { inTable = false; }
+  }
+  return tasks;
+}
+
+function statusBadge(s) {
+  if (s.includes('in progress')) return '<span class="task-badge badge-progress">in progress</span>';
+  if (s.includes('blocked')) return '<span class="task-badge badge-blocked">blocked</span>';
+  if (s.includes('done')) return '<span class="task-badge badge-done">done</span>';
+  return '<span class="task-badge badge-todo">todo</span>';
+}
+
+// ─── PARSE HANDOFF SESSIONS ────────────────────────────────────────────────
+function parseHandoff(md) {
+  if (!md) return [];
+  const entries = [];
+  const blocks = md.split(/^### /m).slice(1);
+  for (const block of blocks.slice(0, 5)) {
+    const lines = block.split('\n');
+    const meta = lines[0].trim();
+    const done = (block.match(/\*\*Done:\*\*([\s\S]*?)(?=\*\*|$)/) || [])[1] || '';
+    const next = (block.match(/\*\*Next person[^:]*:\*\*([\s\S]*?)(?=\*\*|---|$)/) || [])[1] || '';
+    entries.push({ meta, done: done.trim(), next: next.trim() });
+  }
+  return entries;
+}
+
+// ─── PARSE COLLABORATORS for active sessions ───────────────────────────────
+function parseActive(md) {
+  if (!md) return {};
+  const active = {};
+  const section = md.match(/## Who Is Working.*?\n([\s\S]*?)(?=##|$)/)?.[1] || '';
+  const lines = section.split('\n');
+  for (const line of lines) {
+    if (line.startsWith('|') && !line.includes('---') && !line.includes('Name')) {
+      const cols = line.split('|').map(c => c.trim()).filter(Boolean);
+      if (cols.length >= 3 && cols[0] !== '—') {
+        active[cols[0]] = { since: cols[1], task: cols[2], ai: cols[3] || '—' };
+      }
+    }
+  }
+  return active;
+}
+
+// ─── PARSE FILES.md ────────────────────────────────────────────────────────
+function parseFiles(md) {
+  if (!md) return [];
+  const files = [];
+  const lines = md.split('\n');
+  for (const line of lines) {
+    if (line.startsWith('|') && !line.includes('---') && !line.includes('File') && !line.includes('—')) {
+      const cols = line.split('|').map(c => c.trim()).filter(Boolean);
+      if (cols.length >= 3) {
+        const linkMatch = cols[0].match(/\[([^\]]+)\]\(([^)]+)\)/);
+        files.push({
+          name: linkMatch ? linkMatch[1] : cols[0],
+          url: linkMatch ? linkMatch[2] : null,
+          type: cols[1], owner: cols[2], updated: cols[3] || ''
+        });
+      }
+    }
+  }
+  return files;
+}
+
+// ─── PARSE CHANGES.md ──────────────────────────────────────────────────────
+function parseChanges(md) {
+  if (!md) return [];
+  const changes = [];
+  const lines = md.split('\n');
+  for (const line of lines) {
+    if (line.startsWith('|') && !line.includes('---') && !line.includes('Time') && !line.includes('—')) {
+      const cols = line.split('|').map(c => c.trim()).filter(Boolean);
+      if (cols.length >= 3) changes.push({ time: cols[0], who: cols[1], what: cols[2], doc: cols[3] || '' });
+    }
+  }
+  return changes.slice(0, 8);
+}
+
+// ─── RENDER ────────────────────────────────────────────────────────────────
+function renderPeople(activeMap) {
+  const grid = document.getElementById('people-grid');
+  grid.innerHTML = TEAM.map(p => {
+    const info = activeMap[p.name];
+    const isActive = !!info;
+    return `<div class="person-card ${isActive ? 'active' : 'idle'}">
+      <div class="avatar ${p.key}">${p.name[0]}</div>
+      <div class="person-info">
+        <div class="person-name">${p.name}</div>
+        <div class="person-status">${isActive ? (info.task || 'Working') : p.role}</div>
+        ${isActive ? `<div class="person-ai">${info.ai}</div>` : ''}
+      </div>
+      <div class="dot ${isActive ? 'green' : 'grey'}"></div>
+    </div>`;
+  }).join('');
+}
+
+function renderTasks(tasks) {
+  const el = document.getElementById('tasks-list');
+  const active = tasks.filter(t => !t.status.includes('done'));
+  document.getElementById('task-count').textContent = `${active.length} open`;
+  if (!tasks.length) { el.innerHTML = '<div class="empty">No tasks found</div>'; return; }
+  el.innerHTML = active.slice(0, 8).map(t => `
+    <div class="task-item">
+      ${statusBadge(t.status)}
+      <div class="task-text">
+        ${t.task}
+        <div class="task-owner">${t.owner} · ${t.ai}</div>
+      </div>
+    </div>`).join('');
+}
+
+function renderHandoff(entries) {
+  const el = document.getElementById('handoff-list');
+  if (!entries.length) { el.innerHTML = '<div class="empty">No handoff entries yet</div>'; return; }
+  el.innerHTML = entries.map(e => `
+    <div class="log-entry">
+      <div class="log-meta">${e.meta}</div>
+      ${e.done ? `<div class="log-line"><strong>Done:</strong> ${e.done.split('\n')[0].replace(/^-\s*/,'')}</div>` : ''}
+      ${e.next ? `<div class="log-line"><strong>Next:</strong> ${e.next.split('\n')[0].replace(/^-\s*/,'')}</div>` : ''}
+    </div>`).join('');
+}
+
+function renderFiles(files) {
+  const el = document.getElementById('files-list');
+  if (!files.length) { el.innerHTML = '<div class="empty">No files registered yet</div>'; return; }
+  const icons = { 'Google Doc': '📄', 'Google Sheet': '📊', 'PDF': '📕', 'Folder': '📁', 'Script': '⚙️' };
+  el.innerHTML = files.map(f => `
+    <div class="file-item">
+      <span class="file-icon">${icons[f.type] || '📄'}</span>
+      <div class="file-name">
+        ${f.url ? `<a class="file-link" href="${f.url}" target="_blank">${f.name}</a>` : f.name}
+        <div class="file-meta">${f.type} · ${f.owner}</div>
+      </div>
+      <span class="file-meta">${f.updated}</span>
+    </div>`).join('');
+}
+
+function renderChanges(changes) {
+  const el = document.getElementById('changes-list');
+  if (!changes.length) { el.innerHTML = '<div class="empty">No changes logged yet<br><small style="font-size:11px;margin-top:6px;display:block">Install the Apps Script on your Google Docs to auto-track edits</small></div>'; return; }
+  el.innerHTML = changes.map(c => `
+    <div class="change-item">
+      <span class="change-who">${c.who}</span> · ${c.time}<br>
+      <strong>${c.what}</strong> in ${c.doc}
+    </div>`).join('');
+}
+
+// ─── LOAD ALL DATA ─────────────────────────────────────────────────────────
+async function loadAll() {
+  document.getElementById('last-refresh').textContent = 'Refreshing...';
+  const [tasksMd, handoffMd, collabMd, filesMd, changesMd] = await Promise.all([
+    fetchRaw('TASKS.md'),
+    fetchRaw('HANDOFF.md'),
+    fetchRaw('COLLABORATORS.md'),
+    fetchRaw('FILES.md'),
+    fetchRaw('CHANGES.md'),
+  ]);
+  renderPeople(parseActive(collabMd));
+  renderTasks(parseTasks(tasksMd));
+  renderHandoff(parseHandoff(handoffMd));
+  renderFiles(parseFiles(filesMd));
+  renderChanges(parseChanges(changesMd));
+  document.getElementById('last-refresh').textContent = 'Updated ' + new Date().toLocaleTimeString();
+}
+
+// ─── MODALS ────────────────────────────────────────────────────────────────
+function openModal(type) {
+  document.getElementById('modal-' + type).classList.add('open');
+  // Set today's date as default for last-session date
+  if (type === 'start') {
+    const d = new Date(); d.setDate(d.getDate() - 1);
+    document.getElementById('start-last-date').value = d.toISOString().split('T')[0];
+  }
+}
+function closeModal(type) {
+  document.getElementById('modal-' + type).classList.remove('open');
+  document.getElementById(type + '-prompt-box').style.display = 'none';
+  document.getElementById(type + '-copy-btn').style.display = 'none';
+}
+
+function generateStartPrompt() {
+  const name = document.getElementById('start-name').value;
+  const ai = document.getElementById('start-ai').value;
+  const type = document.getElementById('start-type').value;
+  const lastDate = document.getElementById('start-last-date').value;
+  const goal = document.getElementById('start-goal').value;
+  const today = new Date().toISOString().split('T')[0];
+  let prompt;
+  if (type === 'first') {
+    prompt = `You are joining a shared AI collaboration workspace on GitHub for the YCCC (Yemeni Cultural Centre of Canada) project.
+
+Team: Shadi, Emad, Maryam, Yara — each using their own AI assistant.
+
+Please do the following in order:
+1. Read README.md — understand how the system works.
+2. Read HANDOFF.md Zone 1 (Project Context) and the last 3 entries in Zone 2.
+3. Read TASKS.md — understand what's in progress and pending.
+4. Read FILES.md — see all active project documents.
+
+I am ${name}, using ${ai}. Today is ${today}.
+My goal for this session: ${goal || '[not specified]'}
+
+Confirm what you understand before we start.`;
+  } else {
+    prompt = `You are continuing work in a shared AI collaboration workspace on GitHub for the YCCC project.
+
+Team: Shadi, Emad, Maryam, Yara — each using their own AI assistant.
+
+Please do the following in order:
+1. Read HANDOFF.md Zone 2 only — entries since ${lastDate}.
+2. Read TASKS.md — check for status changes since your last session.
+3. Check CHANGES.md for any Google Doc edits made since ${lastDate}.
+
+I am ${name}, using ${ai}. Today is ${today}.
+My goal for this session: ${goal || '[not specified]'}
+
+Confirm what you understand before we start.`;
+  }
+  const box = document.getElementById('start-prompt-box');
+  box.textContent = prompt;
+  box.style.display = 'block';
+  document.getElementById('start-copy-btn').style.display = 'inline-block';
+}
+
+function generateEndPrompt() {
+  const name = document.getElementById('end-name').value;
+  const ai = document.getElementById('end-ai').value;
+  const done = document.getElementById('end-done').value;
+  const newTasks = document.getElementById('end-new-tasks').value;
+  const blocked = document.getElementById('end-blocked').value || 'None';
+  const next = document.getElementById('end-next').value;
+  const manual = document.getElementById('end-manual').value || 'None';
+  const newFiles = document.getElementById('end-new-files').value;
+  const today = new Date().toISOString().split('T')[0];
+  const time = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+
+  let entry = `---\n\n### ${today} ${time} | ${name} × ${ai}\n\n`;
+  entry += `**Done:**\n${done.split('\n').map(l => l.startsWith('-') ? l : `- ${l}`).filter(l => l !== '- ').join('\n')}\n\n`;
+  if (newTasks.trim()) entry += `**New Tasks Added:**\n${newTasks.split('\n').map(l => l.startsWith('-') ? l : `- ${l}`).filter(l => l !== '- ').join('\n')}\n\n`;
+  entry += `**Manual Changes:** ${manual}\n\n`;
+  if (newFiles.trim()) entry += `**New Files Added:** ${newFiles}\n\n`;
+  entry += `**Blocked:** ${blocked}\n\n`;
+  entry += `**Next person picks up:**\n${next.split('\n').map(l => l.startsWith('-') ? l : `- ${l}`).filter(l => l !== '- ').join('\n')}\n`;
+
+  const box = document.getElementById('end-prompt-box');
+  box.textContent = `Paste this into your AI to write the session entry:\n\n---\nAppend the following to HANDOFF.md in Zone 2 (at the top, after the Zone 2 header). Also update TASKS.md for any status changes. If new files were added, update FILES.md.\n\n${entry}`;
+  box.style.display = 'block';
+  document.getElementById('end-copy-btn').style.display = 'inline-block';
+}
+
+function copyPrompt(type) {
+  const text = document.getElementById(type + '-prompt-box').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const t = document.getElementById('toast');
+    t.style.display = 'block';
+    setTimeout(() => t.style.display = 'none', 2000);
+  });
+}
+
+// close modals on overlay click
+document.querySelectorAll('.modal-overlay').forEach(el => {
+  el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); });
+});
+
+// ─── INIT ──────────────────────────────────────────────────────────────────
+loadAll();
+setInterval(loadAll, 60000); // auto-refresh every minute
+</script>
+</body>
+</html>
