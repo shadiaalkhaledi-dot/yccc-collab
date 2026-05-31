@@ -607,7 +607,7 @@ My goal for this session: ${goal || '[not specified]'}
 
 Confirm what you understand before we start.`;
   } else {
-    prompt = `Yoou are continuing work in a shared AI collaboration workspace for the YCCC project.
+    prompt = `You are continuing work in a shared AI collaboration workspace for the YCCC project.
 
 Team: Shadi, Emad, Maryam, Yara — each using their own AI assistant.
 
@@ -638,7 +638,7 @@ Then read the local files normally.
 I am ${name}, using ${ai}. Today is ${today}.
 My goal for this session: ${goal || '[not specified]'}
 
-Confirm what you understand before we start.\`;
+Confirm what you understand before we start.`;
   }
   const box = document.getElementById('start-prompt-box');
   box.textContent = prompt;
