@@ -62,10 +62,11 @@ We are founding the **Yemeni Cultural Centre of Canada (YCCC)**, branded as **YC
 **Done:**
 - Tested full collaboration pipeline end-to-end
 - Connected Google Drive connector and located COLLABORATION-TEST folder
-- Successfully wrote AI-generated text into Yara's test Google Doc via browser automation
-- Confirmed GitHub read/write access works (this commit)
+- Yara manually added text to "test" doc in COLLABORATION-TEST folder
+- Claude (AI) successfully appended text to same doc via browser automation
+- Confirmed GitHub write access works via embedded token in session prompt
 
-**Manual Changes:** Added text to "test" doc in COLLABORATION-TEST folder
+**Manual Changes:** Added "Hello this is yara test" to COLLABORATION-TEST/test doc
 
 **Blocked / Pending:**
 - Yara still needs a GitHub account to be added as collaborator
