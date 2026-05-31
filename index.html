@@ -600,91 +600,11 @@ GITHUB WRITE ACCESS — at end of session, update HANDOFF.md and TASKS.md direct
 - To update a file: (1) GET the file URL to retrieve its SHA, (2) PUT with base64-encoded updated content + SHA + commit message
 - Commit message format: "session: ${name} - [one line summary]"
 
+AT END OF SESSION write a detailed HANDOFF entry including: (1) what was worked on and why, (2) every decision made and the reasoning, (3) what was discovered or learned, (4) what's blocked and exactly why, (5) a direct message to the next person with specific actions. Be detailed — the next AI has no context other than this entry.
+
 I am ${name}, using ${ai}. Today is ${today}.
 My goal for this session: ${goal || '[not specified]'}
 
 Confirm what you understand before we start.`;
   } else {
-    prompt = `You are continuing work in a shared AI collaboration workspace for the YCCC project.
-
-Team: Shadi, Emad, Maryam, Yara — each using their own AI assistant.
-
-SHARED LOCATIONS — use these for all work this session:
-- Google Drive shared folder: ${driveFolder}
-- GitHub repo: https://github.com/${GITHUB_USER}/${GITHUB_REPO}
-
-Please fetch and read these files:
-1. ${base}/HANDOFF.md — Zone 2 only, entries since ${lastDate}
-2. ${base}/TASKS.md — check for status changes since your last session
-3. ${base}/CHANGES.md — any Google Doc edits since ${lastDate}
-4. ${base}/FILES.md — know what files exist before starting work
-
-When creating or editing files, always use the shared Google Drive folder above.
-
-GITHUB WRITE ACCESS — at end of session, update HANDOFF.md and TASKS.md directly:
-- API base: https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/
-- Auth header: Authorization: token ${writeToken}
-- To update a file: (1) GET the file URL to retrieve its SHA, (2) PUT with base64-encoded updated content + SHA + commit message
-- Commit message format: "session: ${name} - [one line summary]"
-
-IF YOU ARE CLAUDE IN COWORK: Before reading any files, run this terminal command to sync the latest changes from all team members:
-cd "C:\\Users\\shadi\\Documents\\Claude\\Projects\\Multiwork System AI team collaboration" && git pull origin main
-Then read the local files normally.
-
-I am ${name}, using ${ai}. Today is ${today}.
-My goal for this session: ${goal || '[not specified]'}
-
-Confirm what you understand before we start.`;
-  }
-  const box = document.getElementById('start-prompt-box');
-  box.textContent = prompt;
-  box.style.display = 'block';
-  document.getElementById('start-copy-btn').style.display = 'inline-block';
-}
-
-function generateEndPrompt() {
-  const name = document.getElementById('end-name').value;
-  const ai = document.getElementById('end-ai').value;
-  const done = document.getElementById('end-done').value;
-  const newTasks = document.getElementById('end-new-tasks').value;
-  const blocked = document.getElementById('end-blocked').value || 'None';
-  const next = document.getElementById('end-next').value;
-  const manual = document.getElementById('end-manual').value || 'None';
-  const newFiles = document.getElementById('end-new-files').value;
-  const today = new Date().toISOString().split('T')[0];
-  const time = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
-
-  let entry = `---\n\n### ${today} ${time} | ${name} × ${ai}\n\n`;
-  entry += `**Done:**\n${done.split('\n').map(l => l.startsWith('-') ? l : `- ${l}`).filter(l => l !== '- ').join('\n')}\n\n`;
-  if (newTasks.trim()) entry += `**New Tasks Added:**\n${newTasks.split('\n').map(l => l.startsWith('-') ? l : `- ${l}`).filter(l => l !== '- ').join('\n')}\n\n`;
-  entry += `**Manual Changes:** ${manual}\n\n`;
-  if (newFiles.trim()) entry += `**New Files Added:** ${newFiles}\n\n`;
-  entry += `**Blocked:** ${blocked}\n\n`;
-  entry += `**Next person picks up:**\n${next.split('\n').map(l => l.startsWith('-') ? l : `- ${l}`).filter(l => l !== '- ').join('\n')}\n`;
-
-  const box = document.getElementById('end-prompt-box');
-  box.textContent = `Paste this into your AI to write the session entry:\n\n---\nAppend the following to HANDOFF.md in Zone 2 (at the top, after the Zone 2 header). Also update TASKS.md for any status changes. If new files were added, update FILES.md.\n\n${entry}`;
-  box.style.display = 'block';
-  document.getElementById('end-copy-btn').style.display = 'inline-block';
-}
-
-function copyPrompt(type) {
-  const text = document.getElementById(type + '-prompt-box').textContent;
-  navigator.clipboard.writeText(text).then(() => {
-    const t = document.getElementById('toast');
-    t.style.display = 'block';
-    setTimeout(() => t.style.display = 'none', 2000);
-  });
-}
-
-// close modals on overlay click
-document.querySelectorAll('.modal-overlay').forEach(el => {
-  el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); });
-});
-
-// ─── INIT ──────────────────────────────────────────────────────────────────
-loadAll();
-setInterval(loadAll, 60000); // auto-refresh every minute
-</script>
-</body>
-</html>
+    prompt = `Yo
