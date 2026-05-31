@@ -2,7 +2,7 @@
 
 > **AI Instructions:** Read this every session. Update status when tasks change. Never delete rows — move completed tasks to the Done section.
 
-Last updated: 2026-05-31 | Yara × Claude
+Last updated: 2026-05-31 | Shadi × Claude
 
 ---
 
@@ -22,9 +22,10 @@ Last updated: 2026-05-31 | Yara × Claude
 | # | Task | Owner | AI | Status | Updated | Notes |
 |---|------|-------|----|--------|---------|-------|
 | 1 | Fill in project description in HANDOFF.md Zone 1 | Shadi | Claude | `todo` | 2026-05-31 | GitHub repo URL now added |
-| 3 | Invite team to GitHub repo | Shadi | — | `todo` | 2026-05-31 | Yara needs account first |
-| 4 | Yara creates GitHub account | Yara | — | `todo` | 2026-05-31 | |
+| 3 | Invite team to GitHub repo | Shadi | — | `done` | 2026-05-31 | Yara invited and accepted |
+| 4 | Yara creates GitHub account | Yara | — | `done` | 2026-05-31 | @yaraalkhaledi123-cpu |
 | 5 | Define first real project task | Shadi | Claude | `todo` | 2026-05-31 | |
+| 6 | Yara: review TEST-Handoff-Log and confirm she can see Shadi's message | Yara | Claude | `todo` | 2026-05-31 | AI handoff test — pick this up in next session |
 
 ---
 
@@ -33,6 +34,8 @@ Last updated: 2026-05-31 | Yara × Claude
 | # | Task | Owner | Completed |
 |---|------|-------|-----------|
 | 2 | Create GitHub repo and push system files | Shadi | 2026-05-31 |
+| 3 | Invite team to GitHub repo | Shadi | 2026-05-31 |
+| 4 | Yara creates GitHub account | Yara | 2026-05-31 |
 
 ---
 
