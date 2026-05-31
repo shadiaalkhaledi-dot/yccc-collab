@@ -628,6 +628,10 @@ GITHUB WRITE ACCESS — at end of session, update HANDOFF.md and TASKS.md direct
 - To update a file: (1) GET the file URL to retrieve its SHA, (2) PUT with base64-encoded updated content + SHA + commit message
 - Commit message format: "session: ${name} - [one line summary]"
 
+IF YOU ARE CLAUDE IN COWORK: Before reading any files, run this terminal command to sync the latest changes from all team members:
+cd "C:\\Users\\shadi\\Documents\\Claude\\Projects\\Multiwork System AI team collaboration" && git pull origin main
+Then read the local files normally.
+
 I am ${name}, using ${ai}. Today is ${today}.
 My goal for this session: ${goal || '[not specified]'}
 
