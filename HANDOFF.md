@@ -116,3 +116,49 @@ If your AI is reading this, the system worked. Task 6 is yours: start a session,
 - Invite Yara to GitHub once she creates an account
 
 ---
+
+
+---
+
+### 2026-06-03 | Shadi × Claude
+
+**Done:**
+- Reviewed Airtable (The Yemeni House) — 46 items in Filings & Milestones confirmed
+- Drafted and generated the following documents (all DRAFT v0.1, black & white format, Drive naming convention):
+  - **Annex A** — Director Declaration Form (4 directors, Parts 1–6, page break per section)
+  - **Written Resolution of First Directors** — 12 resolutions, all 4 directors sign
+  - **Schedule 3** — Conflict of Interest Policy (with Annex A: annual disclosure form)
+  - **Schedule 4** — Gift Acceptance Policy
+  - **Schedule 5** — Direction and Control Policy
+  - **Schedule 6** — Foreign Funding Policy (with Foundation Due Diligence Intake Form)
+  - **Schedule 7** — FITAA Compliance Policy (Bill C-70, with Assessment Checklist)
+  - **Schedule 8** — Signing Authority Policy (with authority threshold table)
+  - **Schedule 9 script written, paused** — Anti-Harassment & Respectful Workplace Policy
+- Airtable statuses updated: Schedules 3–8 + Director Declaration + Written Resolution → Needs Review
+- Signing authority fix: Moudi excluded (not Canadian resident); signing officers = Maryam, Shadi, Emad (any 2 of 3)
+- Google Apps Script written for fixing gold→black color formatting in Google Docs
+
+**Key decisions:**
+- Signing officers: Maryam, Shadi, Emad (any 2 of 3). Moudi is Treasurer but NOT a bank signing officer.
+- Fiscal year end: March 31 (first year ends March 31, 2027)
+- CRA T2050: no deadline — apply when Board decides ready
+- Insurance: not legally required by statute; CGL required contractually by venues; D&O strongly recommended
+- Legal counsel budget: Board sets it, no fixed cap
+- Secretary appointment: Emad — but only after he signs MOU and Director Declaration first
+- DocuSign alternative: SignWell free plan recommended for low-volume formation docs
+- All policy/form scripts: GOLD = "000000" (black & white). Founding docs (Bylaws, MOU, Articles) still use C8993A gold — fix with Node one-liner or Google Apps Script
+- Airtable category "H. International Funding — Gulf Donors" → needs manual rename to "H. International Funding — Foreign Donors"
+
+**Blocked / pending:**
+- Emad full address — blocks Form 4002, MOU, Director Declaration
+- Moudi full address — blocks Form 4002, Director Declaration
+- Registered office address — blocks Form 4002
+- NUANS name search (nuans.com, $30) — blocks Articles filing
+- Lawyer not yet engaged — nothing signed until review complete
+- BMO/Scotiabank pre-clearance call — must happen before any bank account opened
+- SignWell account not yet set up
+- Schedules 9–13 not yet generated (Anti-Harassment script done; Expense Reimbursement, Whistleblower, Child & Youth Protection, Social Media not yet written)
+
+**Direct message to next AI:**
+Start by running `node anti_harassment_v01.js` from the scripts folder to generate Schedule 9. Then write scripts for Schedules 10–13 (Expense Reimbursement, Whistleblower, Child & Youth Protection, Social Media) — same pattern as all other policy scripts. All scripts are in `C:\Users\shadi\Documents\Claude\Projects\Yemen Cultural Center\scripts\`. The output filename must match the Drive naming convention (`Schedule N — [Name] — DRAFT v0.1.docx`). Use GOLD = "000000", black & white, DRAFT_MODE = true, adoptionSigs() = Shadi/Maryam/Emad. Most urgent non-drafting action: chase Emad and Moudi for addresses, run NUANS search, call BMO charity banking team.
+
