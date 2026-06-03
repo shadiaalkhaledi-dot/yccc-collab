@@ -1,40 +1,39 @@
 # TASKS
 
-> **AI Instructions:** Read this every session. Update status when tasks change. Never delete rows.
+> **AI Instructions:** Read this every session. Update status when tasks change. Never delete rows — move completed tasks to the Done section.
 
-Last updated: 2026-06-01 (end of session) | Shadi × Claude
-
----
-
-## Active — You Must Do These
-
-| # | Task | Owner | Status | Notes |
-|---|------|-------|--------|-------|
-| 5 | NUANS search on "Mocha Heritage Society" | Shadi | `todo` | nuans.com, $30 — DO THIS FIRST |
-| 6 | BMO/Scotiabank pre-clearance call for Gulf funding | Shadi | `todo` | Must happen BEFORE opening any bank account |
-| 7 | Engage charity lawyer — send bylaws + Articles | Shadi | `todo` | Blumberg / Drache / Miller Thomson / Carters |
-| 8 | Confirm Emad Al-Maqtary full address | Shadi | `todo` | Needed for Form 4002 |
-| 9 | Confirm Moudi Haji Ahmed Al-Haji full address | Shadi | `todo` | Needed for Form 4002 |
-| 10 | Decide registered office street address | Shadi | `todo` | Home / lawyer office / registered agent |
-| 11 | Complete Moudi Foundation Due Diligence (Annex B) | Shadi + Moudi | `todo` | Before her directorship signed |
-| 12 | Clarify Emad Al-Maqtary operational role | Shadi + Emad | `todo` | For MOU Clause 2.3 |
-| 13 | Sign Founders MOU via DocuSign | Maryam + Shadi + Emad | `todo` | Draft ready |
-| 14 | Build Airtable interfaces — 6 interfaces, 19 page prompts | Shadi | `todo` | Prompts in HANDOFF. P12 groups by Organization |
-| 15 | Build 5 Airtable Forms using Copilot prompts | Shadi | `todo` | Event Reg, Volunteer, Membership, Media Release, Music School |
-| 16 | Clean up Airtable Contacts/Filings fields (UI only, cannot use API) | Shadi | `todo` | Delete 3 junk fields, rename 4 duplicate reverse links, set column order |
-| 17 | Set up DocuSign (~$20/month) | Maryam + Shadi | `todo` | For Volunteer Agreement, Gift Agreements, Director Declarations |
+Last updated: 2026-06-03 | Shadi × Claude
 
 ---
 
-## Active — Next AI Session
+## Status Key
 
-| # | Task | Owner | AI | Status | Notes |
-|---|------|-------|----|--------|-------|
-| 18 | Draft Written Resolution — First Directors' Resolution | Shadi | Claude | `todo` | Adopts bylaws, appoints officers, adopts all Day-One policies |
-| 19 | Draft 10 Day-One governance policies | Shadi | Claude | `todo` | COI, Gift Acceptance, Expense Reimbursement, Signing Authority, Foreign Funding, Direction & Control, Bill C-70, Privacy, Anti-Harassment, Child & Youth Protection |
-| 20 | Draft Director Declaration Form (Annex A) | Shadi | Claude | `todo` | All 4 directors sign at incorporation |
-| 21 | Draft Foreign-Donation Gift Agreement Template (>$5K) | Shadi | Claude | `todo` | Required before accepting any international donation |
-| 22 | Draft Donor Declaration & Source-of-Funds Template (>$25K) | Shadi | Claude | `todo` | Required for large international gifts |
+| Status | Meaning |
+|--------|---------|
+| `todo` | Not started |
+| `in progress` | Actively being worked on — check who owns it |
+| `blocked` | Waiting on something — see Notes |
+| `done` | Complete |
+
+---
+
+## Active
+
+| # | Task | Owner | AI | Status | Updated | Notes |
+|---|------|-------|----|--------|---------|-------|
+| 3 | Invite team to GitHub repo | Shadi | — | `todo` | 2026-05-31 | Yara needs account first |
+| 4 | Yara creates GitHub account | Yara | — | `todo` | 2026-05-31 | |
+| 6 | NUANS name search — confirm 'Mocha Heritage Society' | Shadi | — | `todo` | 2026-06-03 | nuans.com, $30, takes minutes. Blocks Articles filing |
+| 7 | Confirm Emad Al-Maqtary full address | Shadi | — | `blocked` | 2026-06-03 | Blocks Form 4002, MOU, Director Declaration |
+| 8 | Confirm Moudi Haji Ahmed Al-Haji full address | Shadi | — | `blocked` | 2026-06-03 | Blocks Form 4002, Director Declaration |
+| 9 | Decide registered office address | Shadi | — | `todo` | 2026-06-03 | Must be Alberta street address, public record |
+| 10 | BMO/Scotiabank pre-clearance call | Maryam | — | `todo` | 2026-06-03 | Must happen before any bank account opened. Disclose Gulf donors upfront |
+| 11 | Engage Canadian charity lawyer | Shadi/Maryam | — | `todo` | 2026-06-03 | Send bylaws + Articles for review. Budget set by Board |
+| 12 | Set up SignWell account (free) | Maryam | — | `todo` | 2026-06-03 | For signing Director Declarations, MOU, Written Resolution |
+| 13 | Send Director Declaration forms for signing | Maryam | — | `blocked` | 2026-06-03 | Blocked on: lawyer review + Emad/Moudi addresses |
+| 14 | Complete Moudi Foundation Due Diligence Intake | Maryam | Claude | `todo` | 2026-06-03 | Determines if Kuwait foundation is state-linked. Required before directorship signed |
+| 15 | Finish Schedules 9–13 (governance policies) | Shadi | Claude | `in progress` | 2026-06-03 | Sched 9 script written (not run). 10–13 not yet written |
+| 16 | Rename Airtable category H to "Foreign Donors" | Shadi | — | `todo` | 2026-06-03 | Manual in Airtable: Filings & Milestones → Category field |
 
 ---
 
@@ -42,17 +41,15 @@ Last updated: 2026-06-01 (end of session) | Shadi × Claude
 
 | # | Task | Owner | Completed |
 |---|------|-------|-----------|
+| 1 | Fill in project description in HANDOFF.md Zone 1 | Shadi | 2026-06-03 |
 | 2 | Create GitHub repo and push system files | Shadi | 2026-05-31 |
-| 3 | Invite team to GitHub repo | Shadi | 2026-05-31 |
-| 4 | Yara creates GitHub account | Yara | 2026-05-31 |
-| D1 | Draft Bylaws v0.2 | Shadi × Claude | 2026-06-01 |
-| D2 | Draft Articles of Incorporation (Form 4001) | Shadi × Claude | 2026-06-01 |
-| D3 | Draft Form 4002 — Registered Office & Directors | Shadi × Claude | 2026-06-01 |
-| D4 | Draft Founders MOU | Shadi × Claude | 2026-06-01 |
-| D5 | Build Master Document Checklist | Shadi × Claude | 2026-06-01 |
-| D6 | Rebuild Airtable — 14 tables, fully relational | Shadi × Claude | 2026-06-01 |
-| D7 | Populate Filings & Milestones (51 records, assigned) | Shadi × Claude | 2026-06-01 |
-| D8 | Add 4 founders to Contacts + link to Organization | Shadi × Claude | 2026-06-01 |
-| D9 | Design 6 interface + 5 form Copilot prompts | Shadi × Claude | 2026-06-01 |
-| D10 | Fix Airtable relational structure (Organizations, Contacts) | Shadi × Claude | 2026-06-01 |
-| D11 | Clean Filings & Milestones duplicates (100 → 51) | Shadi × Claude | 2026-06-01 |
+| 5 | Define first real project task | Shadi | 2026-06-03 |
+| 17 | Draft Director Declaration Form (Annex A) | Shadi/Claude | 2026-06-03 |
+| 18 | Draft Written Resolution of First Directors | Shadi/Claude | 2026-06-03 |
+| 19 | Draft Schedule 3 — Conflict of Interest Policy | Shadi/Claude | 2026-06-03 |
+| 20 | Draft Schedule 4 — Gift Acceptance Policy | Shadi/Claude | 2026-06-03 |
+| 21 | Draft Schedule 5 — Direction and Control Policy | Shadi/Claude | 2026-06-03 |
+| 22 | Draft Schedule 6 — Foreign Funding Policy | Shadi/Claude | 2026-06-03 |
+| 23 | Draft Schedule 7 — FITAA Compliance Policy | Shadi/Claude | 2026-06-03 |
+| 24 | Draft Schedule 8 — Signing Authority Policy | Shadi/Claude | 2026-06-03 |
+
